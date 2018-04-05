@@ -1,0 +1,19 @@
+@*
+ * This template takes a two arguments, a String containing a
+ * message to display and an AssetsFinder to locate static assets.
+ *@
+@(message: String)(implicit assetsFinder: AssetsFinder)
+
+@main("Multiplayer Particle Simulation", assetsFinder) {
+	<div id="particle-menu"></div>
+	<canvas id="particle-canvas" class="fullscreen">
+	@*
+	 * This canvas is used to draw each client's particles to
+	 * the window
+	 *@
+	 </canvas>
+	<div id="particle-members"></div>
+}
+
+<script src="@assetsFinder.path("javascripts/websocket.js")" type="text/javascript"></script>
+<script src="@assetsFinder.path("javascripts/particlesim.js")" type="text/javascript"></script>

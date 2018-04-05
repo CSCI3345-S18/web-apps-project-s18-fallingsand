@@ -1,0 +1,15 @@
+@*
+ * This template takes a two arguments, a String containing a
+ * message to display and an AssetsFinder to locate static assets.
+ *@
+@(userForm: Form[UserData])(implicit assetsFinder: AssetsFinder)
+
+@main("User Login Page", assetsFinder) {
+	<div id="user-login">
+		<form
+	</div>
+}
+
+<script src="@assetsFinder.path("javascripts/websocket.js")" type="text/javascript"></script>
+<script src="@assetsFinder.path("javascripts/particlesim.js")" type="text/javascript"></script>
+

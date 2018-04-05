@@ -1,0 +1,22 @@
+update
+compile
+eclipse
+exit
+update
+compile
+eclipse
+exit
+update
+compile
+eclipse
+exit
+update
+compile
+compile -feature
+-feature compile
+eclipse
+exit
+clean
+compile
+eclipse
+exit
