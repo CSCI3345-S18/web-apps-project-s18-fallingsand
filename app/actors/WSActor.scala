@@ -14,16 +14,17 @@ class WSActor(out: ActorRef, manager: ActorRef) extends Actor {
   import WSActor._
   
   private var id: Int = -1 //  temporary value (set in preStart())
-  private var user: User = null //  temporary value (set in preStart())
+  private var user: UserInfo = null //  temporary value (set in preStart())
   
   override def preStart() {
     this.id = WSManager.getNextClientID
-    this.user = new User(this.id, (this.id + User.getRandomName(5)), this.id.toString())
+    this.user = new UserInfo(this.id, (this.id + UserUtils.getRandomName(5)))
     println("A new client has connected to a web socket. WSActor ID: " + this.id)
     // tell manager that this actor has been connected
     this.manager.tell(WSManager.NewActor(this), self)
     // send initialization message to client
-    out.tell(Message.getInitSelfMessage(this.user), self)
+    val message = new InitSelfMessage(this.user)
+    out.tell(message.getJsValue, self)
   }
   
   def receive = {
@@ -33,12 +34,31 @@ class WSActor(out: ActorRef, manager: ActorRef) extends Actor {
        * or "syncCanvas" messages from the websockets.
        * Incoming messages should all be "addParticles"
        */
-      var msgType = Message.getTypeOfMessage(json)
-      if(msgType == Message.Types.addParticles) {
-        this.manager.tell(WSManager.BroadcastMessage(json), self)
+      var msgOpt = MessageUtil.parseJsonOpt(json)
+      if(msgOpt.isEmpty) {
+        // do nothing
       }
       else {
-        // do nothing otherwise
+        val msg = msgOpt.get
+        if(msg.isInstanceOf[AddMemberMessage]) {
+          // TODO
+        }
+        else if(msg.isInstanceOf[RemoveMemberMessage]) {
+          // TODO
+        }
+        else if(msg.isInstanceOf[AddParticleActionMessage]) {
+          // TODO
+          this.manager.tell(msg,self)
+        }
+        else if(msg.isInstanceOf[SyncCanvasMessage]) {
+          // TODO
+        }
+        else if(msg.isInstanceOf[InitSelfMessage]) {
+          // TODO
+        }
+        else if(msg.isInstanceOf[NullMessage]) {
+          // TODO
+        }
       }
     case MessageOut(msg) =>
       out.tell(msg, self)
@@ -57,10 +77,10 @@ object WSActor {
   
   case class MessageOut(msg: JsValue)
   
-  class WSActorRef(_ref: ActorRef, _id: Int, _user: User) {
+  class WSActorRef(_ref: ActorRef, _id: Int, _user: UserInfo) {
     val ref: ActorRef = _ref
     val id: Int = _id
-    val user: User = _user
+    val user: UserInfo = _user
     
     def tell(msg: Any, sender: ActorRef) = {
       ref.tell(msg, sender)

@@ -2,14 +2,23 @@
  * This template takes a two arguments, a String containing a
  * message to display and an AssetsFinder to locate static assets.
  *@
-@(userForm: Form[UserData])(implicit assetsFinder: AssetsFinder)
+@(loginForm: Form[NewUser])(implicit request: MessagesRequestHeader, flash: Flash, assetsFinder: AssetsFinder)
 
-@main("User Login Page", assetsFinder) {
-	<div id="user-login">
-		<form
+@main("Particle Simulator Login/Register", assetsFinder) {
+	<div class="centered fullscreen">
+	<h2 class="centered">Particle Simulator</h2>
+	<br>
+	<h3 class="centered">Please login or register</h3>
+	<form id="loginandregister">
+    	@helper.inputText(loginForm("username"))
+	    @helper.inputPassword(loginForm("password"))
+	    <button type="submit" form="loginandregister" formaction="@helper.CSRF(routes.LoginController.login)" value="Login"></button>
+	    <button type="submit" form="loginandregister" formaction="@helper.CSRF(routes.LoginController.register)" value="Register"></button>
+	</form>
+	<br>
+	<h3 class="centered">NOTE: passwords are stored as plain text, don't expect confidentiality.</h3>
 	</div>
 }
-
 <script src="@assetsFinder.path("javascripts/websocket.js")" type="text/javascript"></script>
 <script src="@assetsFinder.path("javascripts/particlesim.js")" type="text/javascript"></script>
 

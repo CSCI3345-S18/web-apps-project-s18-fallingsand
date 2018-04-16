@@ -20,3 +20,14 @@ clean
 compile
 eclipse
 exit
+compile
+eclipse
+compile
+reload
+update
+compile
+eclipse
+exit
+compile
+eclipse
+exit

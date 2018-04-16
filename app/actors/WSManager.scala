@@ -18,19 +18,20 @@ class WSManager extends Actor {
   def receive = {
     case RemoveActor(actorToRemove) =>
       removeClient(actorToRemove)
-      clients.foreach(c => c.tell(Message.getRemoveMemberMessage(actorToRemove.id), self))
+      val msg = new RemoveMemberMessage(actorToRemove.id)
+      clients.foreach(c => c.tell(msg.getJsValue, self))
     case NewActor(newActor) =>
       println("New client connected")
       clients.foreach(c => {
-        c.tell(Message.getAddMemberMessage(newActor.user), self)
-        newActor.tell(Message.getAddMemberMessage(c.user), self)
+        var msgBroadcast = new AddMemberMessage(newActor.user)
+        val msgReply = new AddMemberMessage(c.user)
+        c.tell(msgBroadcast.getJsValue, self)
+        newActor.tell(msgReply.getJsValue, self)
       })
       clients ::= newActor
     case BroadcastMessage(msg) =>
       println("Broadcasting message \"" + msg + "\" to all clients...")
-      if(Message.getTypeOfMessage(msg) == Message.Types.addParticles) {
-        
-      }
+      // TODO: add particles to canvas, etc
       clients.foreach(c => c.tell(WSActor.MessageOut(msg), self))
   }
   

@@ -4,7 +4,7 @@
 		module="webappsprojectsp2018$sources_javadoc"
 		revision="1.0-SNAPSHOT"
 		status="integration"
-		publication="20180402191904"
+		publication="20180415203257"
 	/>
 	<configurations>
 		<conf name="compile" visibility="public" description=""/>
@@ -136,6 +136,11 @@
 			<artifact name="selenium-safari-driver" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
 			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
 		</dependency>
+		<dependency org="com.typesafe.slick" name="slick_2.12" rev="3.2.3" transitive="false" conf="compile->compile,runtime(*),master(compile),runtime,compile(*),master;runtime->compile,runtime(*),master(compile),runtime,compile(*),master;test->compile,runtime(*),master(compile),runtime,compile(*),master;compile-internal->compile,runtime(*),master(compile),runtime,compile(*),master;runtime-internal->compile,runtime(*),master(compile),runtime,compile(*),master;test-internal->compile,runtime(*),master(compile),runtime,compile(*),master">
+			<artifact name="slick_2.12" type="src" ext="jar" conf="*" e:classifier="sources"/>
+			<artifact name="slick_2.12" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
+			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
+		</dependency>
 		<dependency org="com.typesafe.play" name="play-json_2.12" rev="2.6.8" transitive="false" conf="docs->compile,runtime(*),master(compile),runtime,compile(*),master">
 			<artifact name="play-json_2.12" type="src" ext="jar" conf="*" e:classifier="sources"/>
 			<artifact name="play-json_2.12" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
@@ -181,7 +186,7 @@
 			<artifact name="asm-analysis" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
 			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
 		</dependency>
-		<dependency org="com.typesafe.play" name="twirl-api_2.12" rev="1.3.14" transitive="false" conf="compile->default,compile,runtime(*),master(compile),runtime,default(compile),compile(*),master;runtime->default,compile,runtime(*),master(compile),runtime,default(compile),compile(*),master;test->default,compile,runtime(*),master(compile),runtime,default(compile),compile(*),master;compile-internal->default,compile,runtime(*),master(compile),runtime,default(compile),compile(*),master;runtime-internal->default,compile,runtime(*),master(compile),runtime,default(compile),compile(*),master;test-internal->default,compile,runtime(*),master(compile),runtime,default(compile),compile(*),master;docs->compile,runtime(*),master(compile),runtime,compile(*),master">
+		<dependency org="com.typesafe.play" name="twirl-api_2.12" rev="1.3.14" transitive="false" conf="docs->compile,runtime(*),master(compile),runtime,compile(*),master">
 			<artifact name="twirl-api_2.12" type="src" ext="jar" conf="*" e:classifier="sources"/>
 			<artifact name="twirl-api_2.12" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
 			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
@@ -236,6 +241,11 @@
 			<artifact name="play-akka-http-server_2.12" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
 			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
 		</dependency>
+		<dependency org="com.typesafe.play" name="play-jdbc-evolutions_2.12" rev="2.6.0" transitive="false" conf="compile->compile,runtime(*),master(compile),runtime,compile(*),master;runtime->compile,runtime(*),master(compile),runtime,compile(*),master;test->compile,runtime(*),master(compile),runtime,compile(*),master;compile-internal->compile,runtime(*),master(compile),runtime,compile(*),master;runtime-internal->compile,runtime(*),master(compile),runtime,compile(*),master;test-internal->compile,runtime(*),master(compile),runtime,compile(*),master">
+			<artifact name="play-jdbc-evolutions_2.12" type="src" ext="jar" conf="*" e:classifier="sources"/>
+			<artifact name="play-jdbc-evolutions_2.12" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
+			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
+		</dependency>
 		<dependency org="org.seleniumhq.selenium" name="selenium-firefox-driver" rev="3.5.3" transitive="false" conf="test->compile,runtime(*),master(compile),runtime,compile(*),master;test-internal->compile,runtime(*),master(compile),runtime,compile(*),master">
 			<artifact name="selenium-firefox-driver" type="src" ext="jar" conf="*" e:classifier="sources"/>
 			<artifact name="selenium-firefox-driver" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
@@ -244,6 +254,15 @@
 		<dependency org="com.typesafe" name="ssl-config-core_2.12" rev="0.2.2" transitive="false" conf="compile->compile,runtime(*),master(compile),runtime,compile(*),master;runtime->compile,runtime(*),master(compile),runtime,compile(*),master;test->compile,runtime(*),master(compile),runtime,compile(*),master;compile-internal->compile,runtime(*),master(compile),runtime,compile(*),master;runtime-internal->compile,runtime(*),master(compile),runtime,compile(*),master;test-internal->compile,runtime(*),master(compile),runtime,compile(*),master;docs->compile,runtime(*),master(compile),runtime,compile(*),master">
 			<artifact name="ssl-config-core_2.12" type="src" ext="jar" conf="*" e:classifier="sources"/>
 			<artifact name="ssl-config-core_2.12" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
+			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
+		</dependency>
+		<dependency org="com.typesafe.play" name="twirl-api_2.12" rev="1.3.15" transitive="false" conf="compile->default,compile,runtime(*),master(compile),runtime,compile(*),master,default(compile);runtime->compile,runtime(*),master(compile),runtime,compile(*),master,default,default(compile);test->compile,runtime(*),master(compile),runtime,compile(*),master,default,default(compile);compile-internal->compile,runtime(*),master(compile),runtime,compile(*),master,default,default(compile);runtime-internal->compile,runtime(*),master(compile),runtime,compile(*),master,default,default(compile);test-internal->compile,runtime(*),master(compile),runtime,compile(*),master,default,default(compile)">
+			<artifact name="twirl-api_2.12" type="src" ext="jar" conf="*" e:classifier="sources"/>
+			<artifact name="twirl-api_2.12" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
+			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
+		</dependency>
+		<dependency org="mysql" name="mysql-connector-java" rev="6.0.6" transitive="false" conf="compile->default,compile,runtime,default(compile),master;runtime->default,compile,runtime,default(compile),master;test->default,compile,runtime,default(compile),master;compile-internal->default,compile,runtime,default(compile),master;runtime-internal->default,compile,runtime,default(compile),master;test-internal->default,compile,runtime,default(compile),master">
+			<artifact name="mysql-connector-java" type="src" ext="jar" conf="*" e:classifier="sources"/>
 			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
 		</dependency>
 		<dependency org="com.typesafe.akka" name="akka-slf4j_2.12" rev="2.5.11" transitive="false" conf="compile->compile,runtime(*),master(compile),runtime,compile(*),master;runtime->compile,runtime(*),master(compile),runtime,compile(*),master;test->compile,runtime(*),master(compile),runtime,compile(*),master;compile-internal->compile,runtime(*),master(compile),runtime,compile(*),master;runtime-internal->compile,runtime(*),master(compile),runtime,compile(*),master;test-internal->compile,runtime(*),master(compile),runtime,compile(*),master;docs->compile,runtime(*),master(compile),runtime,compile(*),master" info.apiURL="http://doc.akka.io/api/akka/2.5.11">
@@ -431,9 +450,24 @@
 			<artifact name="cache-api" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
 			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
 		</dependency>
+		<dependency org="com.typesafe.play" name="play-jdbc-api_2.12" rev="2.6.0" transitive="false" conf="compile->compile,runtime(*),master(compile),runtime,compile(*),master;runtime->compile,runtime(*),master(compile),runtime,compile(*),master;test->compile,runtime(*),master(compile),runtime,compile(*),master;compile-internal->compile,runtime(*),master(compile),runtime,compile(*),master;runtime-internal->compile,runtime(*),master(compile),runtime,compile(*),master;test-internal->compile,runtime(*),master(compile),runtime,compile(*),master">
+			<artifact name="play-jdbc-api_2.12" type="src" ext="jar" conf="*" e:classifier="sources"/>
+			<artifact name="play-jdbc-api_2.12" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
+			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
+		</dependency>
+		<dependency org="com.typesafe.play" name="play-slick_2.12" rev="3.0.0" transitive="false" conf="compile->default,compile,runtime(*),master(compile),runtime,default(compile),compile(*),master;runtime->default,compile,runtime(*),master(compile),runtime,default(compile),compile(*),master;test->default,compile,runtime(*),master(compile),runtime,default(compile),compile(*),master;compile-internal->default,compile,runtime(*),master(compile),runtime,default(compile),compile(*),master;runtime-internal->default,compile,runtime(*),master(compile),runtime,default(compile),compile(*),master;test-internal->default,compile,runtime(*),master(compile),runtime,default(compile),compile(*),master">
+			<artifact name="play-slick_2.12" type="src" ext="jar" conf="*" e:classifier="sources"/>
+			<artifact name="play-slick_2.12" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
+			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
+		</dependency>
 		<dependency org="com.typesafe.akka" name="akka-actor_2.12" rev="2.5.11" transitive="false" conf="compile->compile,runtime(*),master(compile),runtime,compile(*),master;runtime->compile,runtime(*),master(compile),runtime,compile(*),master;test->compile,runtime(*),master(compile),runtime,compile(*),master;compile-internal->compile,runtime(*),master(compile),runtime,compile(*),master;runtime-internal->compile,runtime(*),master(compile),runtime,compile(*),master;test-internal->compile,runtime(*),master(compile),runtime,compile(*),master;docs->compile,runtime(*),master(compile),runtime,compile(*),master" info.apiURL="http://doc.akka.io/api/akka/2.5.11">
 			<artifact name="akka-actor_2.12" type="src" ext="jar" conf="*" e:classifier="sources"/>
 			<artifact name="akka-actor_2.12" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
+			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
+		</dependency>
+		<dependency org="com.typesafe.slick" name="slick-hikaricp_2.12" rev="3.2.0" transitive="false" conf="compile->compile,runtime(*),master(compile),runtime,compile(*),master;runtime->compile,runtime(*),master(compile),runtime,compile(*),master;test->compile,runtime(*),master(compile),runtime,compile(*),master;compile-internal->compile,runtime(*),master(compile),runtime,compile(*),master;runtime-internal->compile,runtime(*),master(compile),runtime,compile(*),master;test-internal->compile,runtime(*),master(compile),runtime,compile(*),master">
+			<artifact name="slick-hikaricp_2.12" type="src" ext="jar" conf="*" e:classifier="sources"/>
+			<artifact name="slick-hikaricp_2.12" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
 			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
 		</dependency>
 		<dependency org="com.fasterxml.jackson.core" name="jackson-annotations" rev="2.8.11" transitive="false" conf="compile->compile,runtime(*),master(compile),runtime,compile(*),master;runtime->compile,runtime(*),master(compile),runtime,compile(*),master;test->compile,runtime(*),master(compile),runtime,compile(*),master;compile-internal->compile,runtime(*),master(compile),runtime,compile(*),master;runtime-internal->compile,runtime(*),master(compile),runtime,compile(*),master;test-internal->compile,runtime(*),master(compile),runtime,compile(*),master;docs->compile,runtime(*),master(compile),runtime,compile(*),master">
@@ -524,6 +558,11 @@
 			<artifact name="play-streams_2.12" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
 			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
 		</dependency>
+		<dependency org="com.typesafe.slick" name="slick-codegen_2.12" rev="3.2.3" transitive="false" conf="compile->default,compile,runtime,default(compile),master;runtime->default,compile,runtime,default(compile),master;test->default,compile,runtime,default(compile),master;compile-internal->default,compile,runtime,default(compile),master;runtime-internal->default,compile,runtime,default(compile),master;test-internal->default,compile,runtime,default(compile),master">
+			<artifact name="slick-codegen_2.12" type="src" ext="jar" conf="*" e:classifier="sources"/>
+			<artifact name="slick-codegen_2.12" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
+			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
+		</dependency>
 		<dependency org="org.scala-lang" name="scala-compiler" rev="2.12.4" transitive="false" conf="scala-tool->default,compile,runtime,optional,optional(default),master">
 			<artifact name="scala-compiler" type="src" ext="jar" conf="*" e:classifier="sources"/>
 			<artifact name="scala-compiler" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
@@ -532,6 +571,11 @@
 		<dependency org="com.typesafe.play" name="play-omnidoc_2.12" rev="2.6.12" transitive="false" conf="docs->default,compile,runtime,default(compile),master">
 			<artifact name="play-omnidoc_2.12" type="src" ext="jar" conf="*" e:classifier="sources"/>
 			<artifact name="play-omnidoc_2.12" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
+			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
+		</dependency>
+		<dependency org="com.vmunier" name="scalajs-scripts_2.12" rev="1.1.2" transitive="false" conf="compile->default,compile,runtime,default(compile),master;runtime->default,compile,runtime,default(compile),master;test->default,compile,runtime,default(compile),master;compile-internal->default,compile,runtime,default(compile),master;runtime-internal->default,compile,runtime,default(compile),master;test-internal->default,compile,runtime,default(compile),master">
+			<artifact name="scalajs-scripts_2.12" type="src" ext="jar" conf="*" e:classifier="sources"/>
+			<artifact name="scalajs-scripts_2.12" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
 			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
 		</dependency>
 		<dependency org="com.typesafe.play" name="play-test_2.12" rev="2.6.12" transitive="false" conf="test->default,compile,runtime,default(compile),master,runtime(*),master(compile),compile(*);test-internal->default,compile,runtime,default(compile),master,runtime(*),master(compile),compile(*)">
@@ -588,9 +632,19 @@
 			<artifact name="reactive-streams" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
 			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
 		</dependency>
+		<dependency org="com.zaxxer" name="HikariCP" rev="2.5.1" transitive="false" conf="compile->compile,runtime(*),master(compile),runtime,compile(*),master;runtime->compile,runtime(*),master(compile),runtime,compile(*),master;test->compile,runtime(*),master(compile),runtime,compile(*),master;compile-internal->compile,runtime(*),master(compile),runtime,compile(*),master;runtime-internal->compile,runtime(*),master(compile),runtime,compile(*),master;test-internal->compile,runtime(*),master(compile),runtime,compile(*),master">
+			<artifact name="HikariCP" type="src" ext="jar" conf="*" e:classifier="sources"/>
+			<artifact name="HikariCP" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
+			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
+		</dependency>
 		<dependency org="org.scala-sbt" name="test-interface" rev="1.0" transitive="false" conf="test->compile,runtime(*),master(compile),runtime,compile(*),master;test-internal->compile,runtime(*),master(compile),runtime,compile(*),master">
 			<artifact name="test-interface" type="src" ext="jar" conf="*" e:classifier="sources"/>
 			<artifact name="test-interface" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
+			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
+		</dependency>
+		<dependency org="com.typesafe.play" name="play-slick-evolutions_2.12" rev="3.0.0" transitive="false" conf="compile->default,compile,runtime,default(compile),master;runtime->default,compile,runtime,default(compile),master;test->default,compile,runtime,default(compile),master;compile-internal->default,compile,runtime,default(compile),master;runtime-internal->default,compile,runtime,default(compile),master;test-internal->default,compile,runtime,default(compile),master">
+			<artifact name="play-slick-evolutions_2.12" type="src" ext="jar" conf="*" e:classifier="sources"/>
+			<artifact name="play-slick-evolutions_2.12" type="doc" ext="jar" conf="*" e:classifier="javadoc"/>
 			<include name="*" type="*" ext="*" conf="" matcher="exact"/>
 		</dependency>
 		<dependency org="com.typesafe.play" name="play-logback_2.12" rev="2.6.12" transitive="false" conf="compile->default,compile,runtime,default(compile),master;runtime->default,compile,runtime,default(compile),master;test->default,compile,runtime,default(compile),master;compile-internal->default,compile,runtime,default(compile),master;runtime-internal->default,compile,runtime,default(compile),master;test-internal->default,compile,runtime,default(compile),master">
