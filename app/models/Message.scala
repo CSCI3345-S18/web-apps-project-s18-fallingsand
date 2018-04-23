@@ -6,16 +6,20 @@ import play.api.libs.json._
  * abstract class that the various message formats are built from
  */
 abstract class AbstractMessage {
-  val id: Int
+  def companion: MessageCompanion
   def getJsValue: JsValue
+  def getId(): Int = companion.id
+}
+
+trait MessageCompanion {
+  val id: Int
 }
 
 class RemoveMemberMessage(val memberId: Int) extends AbstractMessage {
-  val id: Int = 0
-  
+  def companion = RemoveMemberMessage
   def getJsValue: JsValue = {
     JsObject(Seq(
-      "messageType" -> JsNumber(this.id),
+      "messageType" -> JsNumber(RemoveMemberMessage.id),
       "body" -> JsObject(Seq(
           "memberId" -> JsNumber(memberId)
        ))
@@ -23,12 +27,15 @@ class RemoveMemberMessage(val memberId: Int) extends AbstractMessage {
   }
 }
 
+object RemoveMemberMessage extends MessageCompanion {
+  val id: Int = 0
+}
+
 class AddMemberMessage(val member: UserInfo) extends AbstractMessage {
-  val id: Int = 1
-  
+  def companion = AddMemberMessage
   def getJsValue: JsValue = {
     JsObject(Seq(
-      "messageType" -> JsNumber(this.id),
+      "messageType" -> JsNumber(AddMemberMessage.id),
       "body" -> JsObject(Seq(
           "memberId" -> JsNumber(member.id),
           "memberName" -> JsString(member.username)
@@ -37,34 +44,43 @@ class AddMemberMessage(val member: UserInfo) extends AbstractMessage {
   }
 }
 
+object AddMemberMessage extends MessageCompanion {
+  val id: Int = 1
+}
+
 class AddParticleActionMessage(val particleAction: AbstractParticleAction) extends AbstractMessage {
-  val id: Int = 2
-  
+  def companion = AddParticleActionMessage
   def getJsValue: JsValue = {
     JsObject(Seq(
-      "messageType" -> JsNumber(this.id),
+      "messageType" -> JsNumber(AddParticleActionMessage.id),
       "body" -> particleAction.getJsValue
     ))
   }
 }
 
+object AddParticleActionMessage extends MessageCompanion {
+  val id: Int = 2
+}
+
 class SyncCanvasMessage(val canvas: Canvas) extends AbstractMessage {
-  val id: Int = 3
-  
+  def companion = SyncCanvasMessage
   def getJsValue: JsValue = {
     JsObject(Seq(
-      "messageType" -> JsNumber(this.id),
+      "messageType" -> JsNumber(SyncCanvasMessage.id),
       "body" -> canvas.getJsValue
     ))
   }
 }
 
+object SyncCanvasMessage extends MessageCompanion {
+  val id: Int = 3
+}
+
 class InitSelfMessage(val selfUser: UserInfo) extends AbstractMessage {
-  val id: Int = 4
-  
+  def companion = InitSelfMessage
   def getJsValue: JsValue = {
     JsObject(Seq(
-      "messageType" -> JsNumber(this.id),
+      "messageType" -> JsNumber(InitSelfMessage.id),
       "body" -> JsObject(Seq(
           "selfId" -> JsNumber(selfUser.id),
           "selfUsername" -> JsString(selfUser.username)
@@ -73,14 +89,21 @@ class InitSelfMessage(val selfUser: UserInfo) extends AbstractMessage {
   }
 }
 
+object InitSelfMessage extends MessageCompanion {
+  val id: Int = 4
+}
+
 class NullMessage extends AbstractMessage {
-  val id: Int = 5
-  
+  def companion = NullMessage
   def getJsValue: JsValue = {
     JsObject(Seq(
-      "messageType" -> JsNumber(this.id)
+      "messageType" -> JsNumber(NullMessage.id)
     ))
   }
+}
+
+object NullMessage extends MessageCompanion {
+  val id: Int = 5
 }
 
 object MessageUtil {
@@ -91,63 +114,73 @@ object MessageUtil {
       None
     } 
     else {
-      val msgBody = msgBodyOpt.get
       val msgType = msgTypeOpt.get
-      msgType.value.intValue() match {
-        case 0 => {
-        	  val memberIdOpt = (msgBody \ "memberId").asOpt[JsNumber]
-        		if(memberIdOpt.isEmpty) {
-        		  None
+      if(msgBodyOpt.isEmpty) {
+        if(msgType.value.intValue() == NullMessage.id) {
+          Some(new NullMessage())
+        }
+        else {
+          None
+        }
+      }
+      else {
+        val msgBody = msgBodyOpt.get
+        msgType.value.intValue() match {
+          case RemoveMemberMessage.id => {
+          	  val memberIdOpt = (msgBody \ "memberId").asOpt[JsNumber]
+          		if(memberIdOpt.isEmpty) {
+          		  None
+          		}
+          		else {
+          		  Some(new RemoveMemberMessage(memberIdOpt.get.value.intValue()))
+          		}
+          }
+          case AddMemberMessage.id => {
+            val memberIdOpt = (msgBody \ "memberId").asOpt[JsNumber]
+          	val memberNameOpt = (msgBody \ "memberName").asOpt[JsString]
+          	if(memberIdOpt.isEmpty || memberNameOpt.isEmpty) {
+          		None
+          	}
+          	else {
+          		val user = new UserInfo(memberIdOpt.get.value.intValue(),memberNameOpt.get.value)
+          		Some(new AddMemberMessage(user))
         		}
-        		else {
-        		  Some(new RemoveMemberMessage(memberIdOpt.get.value.intValue()))
-        		}
-        }
-        case 1 => {
-          val memberIdOpt = (msgBody \ "memberId").asOpt[JsNumber]
-        	val memberNameOpt = (msgBody \ "memberName").asOpt[JsString]
-        	if(memberIdOpt.isEmpty || memberNameOpt.isEmpty) {
-        		None
-        	}
-        	else {
-        		val user = new UserInfo(memberIdOpt.get.value.intValue(),memberNameOpt.get.value)
-        		Some(new AddMemberMessage(user))
-      		}
-        }
-        case 2 => {
-      	  val particleActionOpt = ParticleAction.getParticleActionOptFromJson(msgBody)
-      	  if(particleActionOpt.isEmpty) {
-      	    None
-      	  }
-      	  else {
-      	    val particleAction = particleActionOpt.get
-      		  Some(new AddParticleActionMessage(particleAction))
-      	  }
-        }
-        case 3 => {
-          val canvasOpt = Canvas.getCanvasOptFromJson(msgBody)
-          if(canvasOpt.isEmpty) {
-            None
           }
-          else {
-      	    Some(new SyncCanvasMessage(canvasOpt.get))
+          case AddParticleActionMessage.id => {
+        	  val particleActionOpt = ParticleAction.getParticleActionOptFromJson(msgBody)
+        	  if(particleActionOpt.isEmpty) {
+        	    None
+        	  }
+        	  else {
+        	    val particleAction = particleActionOpt.get
+        		  Some(new AddParticleActionMessage(particleAction))
+        	  }
           }
-        }
-        case 4 => {
-          val selfIdOpt = (msgBody \ "selfId").asOpt[JsNumber]
-          val selfUsernameOpt = (msgBody \ "selfUsername").asOpt[JsString]
-          if(selfIdOpt.isEmpty || selfUsernameOpt.isEmpty) {
-            None
+          case SyncCanvasMessage.id => {
+            val canvasOpt = Canvas.getCanvasOptFromJson(msgBody)
+            if(canvasOpt.isEmpty) {
+              None
+            }
+            else {
+        	    Some(new SyncCanvasMessage(canvasOpt.get))
+            }
           }
-          else {
-            val selfUserInfo = new UserInfo(selfIdOpt.get.value.intValue(),selfUsernameOpt.get.value)
-      	    Some(new InitSelfMessage(selfUserInfo))
+          case InitSelfMessage.id => {
+            val selfIdOpt = (msgBody \ "selfId").asOpt[JsNumber]
+            val selfUsernameOpt = (msgBody \ "selfUsername").asOpt[JsString]
+            if(selfIdOpt.isEmpty || selfUsernameOpt.isEmpty) {
+              None
+            }
+            else {
+              val selfUserInfo = new UserInfo(selfIdOpt.get.value.intValue(),selfUsernameOpt.get.value)
+        	    Some(new InitSelfMessage(selfUserInfo))
+            }
           }
+          case NullMessage.id => {
+        	  Some(new NullMessage())
+          }
+          case _ => None
         }
-        case 5 => {
-      	  Some(new NullMessage())
-        }
-        case _ => None
       }
     }
   }

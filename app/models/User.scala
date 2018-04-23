@@ -47,7 +47,7 @@ object UserQueries {
   }
   
   def addUser(nu: NewUser, db: Database)(implicit ec: ExecutionContext): Future[Option[User]] = {
-    val existing = findByCredentials(nu.username,nu.password,db)
+    val existing = findByUsername(nu.username,db)
     existing.transformWith{userTry =>
       if(userTry.get.isDefined) {
         Future(None)

@@ -32,18 +32,29 @@ Seq[Any](format.raw/*6.1*/("""
 	<h2 class="centered">Particle Simulator</h2>
 	<br>
 	<h3 class="centered">Please login or register</h3>
-	<form id="loginandregister">
-    	"""),_display_(/*13.7*/helper/*13.13*/.inputText(loginForm("username"))),format.raw/*13.46*/("""
-	    """),_display_(/*14.7*/helper/*14.13*/.inputPassword(loginForm("password"))),format.raw/*14.50*/("""
-	    """),format.raw/*15.6*/("""<button type="submit" form="loginandregister" formaction=""""),_display_(/*15.65*/helper/*15.71*/.CSRF(routes.LoginController.login)),format.raw/*15.106*/("""" value="Login"></button>
-	    <button type="submit" form="loginandregister" formaction=""""),_display_(/*16.65*/helper/*16.71*/.CSRF(routes.LoginController.register)),format.raw/*16.109*/("""" value="Register"></button>
+	"""),_display_(/*12.3*/if(loginForm.hasGlobalErrors)/*12.32*/{_display_(Seq[Any](format.raw/*12.33*/("""
+	"""),format.raw/*13.2*/("""<br>
+	<h3 class="centered">"""),_display_(/*14.24*/(loginForm.globalError.get.message)),format.raw/*14.59*/("""</h3>
+	""")))}),format.raw/*15.3*/("""
+	"""),format.raw/*16.2*/("""<form id="loginandregister">
+		"""),_display_(/*17.4*/if(loginForm.hasErrors && loginForm.error("username").isDefined)/*17.68*/ {_display_(Seq[Any](format.raw/*17.70*/("""
+		"""),format.raw/*18.3*/("""<h3 class="centered">"""),_display_(/*18.25*/(loginForm.error("username").get.message)),format.raw/*18.66*/("""</h3>
+		<br>
+		""")))}),format.raw/*20.4*/("""
+    	"""),_display_(/*21.7*/helper/*21.13*/.inputText(loginForm("username"))),format.raw/*21.46*/("""
+	    """),_display_(/*22.7*/if(loginForm.hasErrors && loginForm.error("password").isDefined)/*22.71*/ {_display_(Seq[Any](format.raw/*22.73*/("""
+	    """),format.raw/*23.6*/("""<br>
+	    <h3 class="centered">"""),_display_(/*24.28*/(loginForm.error("password").get.message)),format.raw/*24.69*/("""</h3>
+	    <br>
+	    """)))}),format.raw/*26.7*/("""
+	    """),_display_(/*27.7*/helper/*27.13*/.inputPassword(loginForm("password"))),format.raw/*27.50*/("""
+	    """),format.raw/*28.6*/("""<button type="submit" form="loginandregister" formaction=""""),_display_(/*28.65*/helper/*28.71*/.CSRF(routes.LoginController.login)),format.raw/*28.106*/("""" value="Login">Login</button>
+	    <button type="submit" form="loginandregister" formaction=""""),_display_(/*29.65*/helper/*29.71*/.CSRF(routes.LoginController.register)),format.raw/*29.109*/("""" value="Register">Register</button>
 	</form>
 	<br>
 	<h3 class="centered">NOTE: passwords are stored as plain text, don't expect confidentiality.</h3>
 	</div>
-""")))}),format.raw/*21.2*/("""
-"""),format.raw/*22.1*/("""<script src=""""),_display_(/*22.15*/assetsFinder/*22.27*/.path("javascripts/websocket.js")),format.raw/*22.60*/("""" type="text/javascript"></script>
-<script src=""""),_display_(/*23.15*/assetsFinder/*23.27*/.path("javascripts/particlesim.js")),format.raw/*23.62*/("""" type="text/javascript"></script>
+""")))}),format.raw/*34.2*/("""
 
 """))
       }
@@ -61,11 +72,11 @@ Seq[Any](format.raw/*6.1*/("""
 
               /*
                   -- GENERATED --
-                  DATE: Sun Apr 15 20:32:38 CDT 2018
+                  DATE: Sun Apr 22 20:51:31 CDT 2018
                   SOURCE: C:/Users/kayla/Documents/web-apps-project-s18-fallingsand/app/views/login.scala.html
-                  HASH: 3627ccd359ef5ca08fbd6653f02a571c50d10a13
-                  MATRIX: 908->137|1111->247|1138->249|1201->304|1240->306|1268->308|1468->482|1483->488|1537->521|1570->528|1585->534|1643->571|1676->577|1762->636|1777->642|1834->677|1951->767|1966->773|2026->811|2208->963|2236->964|2277->978|2298->990|2352->1023|2428->1072|2449->1084|2505->1119
-                  LINES: 24->5|29->6|30->7|30->7|30->7|31->8|36->13|36->13|36->13|37->14|37->14|37->14|38->15|38->15|38->15|38->15|39->16|39->16|39->16|44->21|45->22|45->22|45->22|45->22|46->23|46->23|46->23
+                  HASH: 6f64033176cda7391393e4f41c6ea3cd3be2416d
+                  MATRIX: 908->137|1111->247|1138->249|1201->304|1240->306|1268->308|1434->448|1472->477|1511->478|1540->480|1595->508|1651->543|1689->551|1718->553|1776->585|1849->649|1889->651|1919->654|1968->676|2030->717|2076->733|2109->740|2124->746|2178->779|2211->786|2284->850|2324->852|2357->858|2416->890|2478->931|2530->953|2563->960|2578->966|2636->1003|2669->1009|2755->1068|2770->1074|2827->1109|2949->1204|2964->1210|3024->1248|3214->1408
+                  LINES: 24->5|29->6|30->7|30->7|30->7|31->8|35->12|35->12|35->12|36->13|37->14|37->14|38->15|39->16|40->17|40->17|40->17|41->18|41->18|41->18|43->20|44->21|44->21|44->21|45->22|45->22|45->22|46->23|47->24|47->24|49->26|50->27|50->27|50->27|51->28|51->28|51->28|51->28|52->29|52->29|52->29|57->34
                   -- GENERATED --
               */
           

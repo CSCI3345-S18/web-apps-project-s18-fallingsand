@@ -25,7 +25,7 @@ class LoginController @Inject()(protected val dbConfigProvider: DatabaseConfigPr
 
   def getLoginForm = {
     Form(mapping(
-          "name" -> nonEmptyText,
+          "username" -> nonEmptyText,
           "password" -> nonEmptyText,
     )(NewUser.apply)(NewUser.unapply))
   }
@@ -50,7 +50,7 @@ class LoginController @Inject()(protected val dbConfigProvider: DatabaseConfigPr
             Redirect(routes.PSController.index).withSession("connected" -> UserUtils.getStringFromUser(user.get))
           }
           else {
-            BadRequest(views.html.login((this.getLoginForm).withGlobalError("Could not find the user with that username and password")))
+            BadRequest(views.html.login((this.getLoginForm).withGlobalError("Username or password was incorrect")))
           }
         }
       })
@@ -72,7 +72,7 @@ class LoginController @Inject()(protected val dbConfigProvider: DatabaseConfigPr
           }
           else {
             Logger.debug("User already exists")
-            BadRequest(views.html.login((this.getLoginForm).withGlobalError("There is already a user with that username and password")))
+            BadRequest(views.html.login((this.getLoginForm).withGlobalError("Try a different username")))
           }
         }
       })
