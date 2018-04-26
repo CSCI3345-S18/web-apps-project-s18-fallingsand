@@ -11,6 +11,10 @@ abstract class AbstractParticleAction {
   def getJsValue: JsValue
 }
 
+/**
+ * Equivalent javascript object definition:
+ * var NullParticleAction = null;
+ */
 class NullParticleAction() extends AbstractParticleAction {
   val id: Int = -1
   val xPos: Int = -100
@@ -21,6 +25,18 @@ class NullParticleAction() extends AbstractParticleAction {
   }
 }
 
+/**
+ * Equivalent javascript object definition:
+ * var SandParticleAction = {
+ * 	"particleType": 0,
+ *  "xPos": [some x-coordinate as an integer],
+ *  "yPos": [some y-coordinate as an integer]
+ * };
+ * 
+ * NOTE: "timeAddedMillis" should not be calculated by javascript.
+ * Leave out "timeAddedMillis" for objects created by the client,
+ * and only use "timeAddedMillis" values from messages sent by the server.
+ */
 class SandParticleAction(_xPos: Int, _yPos: Int, _timeAddedMillis: Long = Instant.now().toEpochMilli()) extends AbstractParticleAction {
   val id: Int = 0
   val xPos: Int = _xPos
@@ -36,6 +52,18 @@ class SandParticleAction(_xPos: Int, _yPos: Int, _timeAddedMillis: Long = Instan
   }
 }
 
+/**
+ * Equivalent javascript object definition:
+ * var RockParticleAction = {
+ * 	"particleType": 1,
+ *  "xPos": [some x-coordinate as an integer],
+ *  "yPos": [some y-coordinate as an integer]
+ * };
+ * 
+ * NOTE: "timeAddedMillis" should not be calculated by javascript.
+ * Leave out "timeAddedMillis" for objects created by the client,
+ * and only use "timeAddedMillis" values from messages sent by the server.
+ */
 class RockParticleAction(_xPos: Int, _yPos: Int, _timeAddedMillis: Long = Instant.now().toEpochMilli()) extends AbstractParticleAction {
   val id: Int = 1
   val xPos: Int = _xPos
@@ -51,6 +79,18 @@ class RockParticleAction(_xPos: Int, _yPos: Int, _timeAddedMillis: Long = Instan
   }
 }
 
+/**
+ * Equivalent javascript object definition:
+ * var WaterParticleAction = {
+ * 	"particleType": 2,
+ *  "xPos": [some x-coordinate as an integer],
+ *  "yPos": [some y-coordinate as an integer]
+ * };
+ * 
+ * NOTE: "timeAddedMillis" should not be calculated by javascript.
+ * Leave out "timeAddedMillis" for objects created by the client,
+ * and only use "timeAddedMillis" values from messages sent by the server.
+ */
 class WaterParticleAction(_xPos: Int, _yPos: Int, _timeAddedMillis: Long = Instant.now().toEpochMilli()) extends AbstractParticleAction {
   val id: Int = 2
   val xPos: Int = _xPos

@@ -29,41 +29,43 @@ class WSActor(out: ActorRef, manager: ActorRef) extends Actor {
   
   def receive = {
     case json: JsValue =>
-      /* TODO : parse json
-       * should not be receiving any add/remove member
-       * or "syncCanvas" messages from the websockets.
-       * Incoming messages should all be "addParticles"
+      /* If WSActor gets a JSValue message,
+       * we know it must have originated from
+       * the client, because the WSManager only sends
+       * "MessageOut" messages to the WSActors.
        */
       var msgOpt = MessageUtil.parseJsonOpt(json)
       if(msgOpt.isEmpty) {
+        println("WSActor with id: " + this.id + " recieved an invalid json message.")
         // do nothing
+        // no "return" needed here because of Scala magic
       }
       else {
         val msg = msgOpt.get
-        if(msg.isInstanceOf[AddMemberMessage]) {
-          // TODO
-        }
-        else if(msg.isInstanceOf[RemoveMemberMessage]) {
-          // TODO
-        }
-        else if(msg.isInstanceOf[AddParticleActionMessage]) {
-          // TODO
-          this.manager.tell(msg,self)
-        }
-        else if(msg.isInstanceOf[SyncCanvasMessage]) {
-          // TODO
-        }
-        else if(msg.isInstanceOf[InitSelfMessage]) {
-          // TODO
-        }
-        else if(msg.isInstanceOf[NullMessage]) {
-          // TODO
+        msg match {
+          case m:AddParticleActionMessage => {
+            println("WSActor with id: " + this.id + " recieved a particle action message.")
+            // let manager know about new particle action
+            this.manager.tell(WSManager.AddParticleAction(m), self)
+          }
+          case m:NullMessage => {
+            // sent by client just to keep connection open
+            println("WSActor with id: " + this.id + " recieved a null message.")
+            // do nothing (for now... maybe something later?)
+          }
+          case _ => {
+            // message was of a type that should not
+            // be sent by the client to the WSActor.
+            println("WSActor with id: " + this.id + " recieved an unexpected json message of class " + msg.getClass + ".")
+            // do nothing
+          }
         }
       }
     case MessageOut(msg) =>
+      println("WSActor with id: " + this.id + " was told to send a message to its client.")
       out.tell(msg, self)
     case m =>
-      println("Unknown message: " + m)
+      println("WSActor with id: " + this.id + " recieved an unknown message.")
   }
   
   override def postStop() {
@@ -75,6 +77,8 @@ class WSActor(out: ActorRef, manager: ActorRef) extends Actor {
 object WSActor {
   def props(out: ActorRef, manager: ActorRef) = Props(new WSActor(out, manager))
   
+  // Any message that the actor should send back to the client is stored in a MessageOut.
+  // The WSManager sends MessageOut instances to the WSActors it manages.
   case class MessageOut(msg: JsValue)
   
   class WSActorRef(_ref: ActorRef, _id: Int, _user: UserInfo) {
