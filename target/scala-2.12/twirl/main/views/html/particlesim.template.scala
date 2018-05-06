@@ -26,18 +26,17 @@ object particlesim extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.ap
       {
 
 
-Seq[Any](format.raw/*5.56*/("""
-
+Seq[Any](format.raw/*6.1*/("""
 """),_display_(/*7.2*/main("Multiplayer Particle Simulation", assetsFinder)/*7.55*/ {_display_(Seq[Any](format.raw/*7.57*/("""
 	"""),format.raw/*8.2*/("""<div id="particle-menu"></div>
-	<canvas id="particle-canvas" class="fullscreen">
+	<canvas id="particle-canvas" width="600" height="600">
 	"""),format.raw/*13.5*/("""
 	 """),format.raw/*14.3*/("""</canvas>
 	<div id="particle-members"></div>
 """)))}),format.raw/*16.2*/("""
 
-"""),format.raw/*18.1*/("""<script src=""""),_display_(/*18.15*/assetsFinder/*18.27*/.path("javascripts/websocket.js")),format.raw/*18.60*/("""" type="text/javascript"></script>
-<script src=""""),_display_(/*19.15*/assetsFinder/*19.27*/.path("javascripts/particlesim.js")),format.raw/*19.62*/("""" type="text/javascript"></script>
+"""),format.raw/*18.98*/("""
+"""),format.raw/*19.1*/("""<script src=""""),_display_(/*19.15*/assetsFinder/*19.27*/.path("javascripts/particlesystem.js")),format.raw/*19.65*/("""" type="text/javascript"></script>
 """))
       }
     }
@@ -54,11 +53,11 @@ Seq[Any](format.raw/*5.56*/("""
 
               /*
                   -- GENERATED --
-                  DATE: Sun Apr 15 08:36:36 CDT 2018
-                  SOURCE: C:/Users/kayla/Documents/web-apps-project-s18-fallingsand/app/views/particlesim.scala.html
-                  HASH: 672c0e0d65a2401072e4668311076919ee55e1a7
-                  MATRIX: 882->141|1031->195|1061->200|1122->253|1161->255|1190->258|1301->426|1332->430|1410->478|1441->482|1482->496|1503->508|1557->541|1634->591|1655->603|1711->638
-                  LINES: 24->5|29->5|31->7|31->7|31->7|32->8|34->13|35->14|37->16|39->18|39->18|39->18|39->18|40->19|40->19|40->19
+                  DATE: Sun May 06 18:10:31 CDT 2018
+                  SOURCE: /users/jburnett/Local/HTML-Documents/WebApps/finalProj/web-apps-project-s18-fallingsand/app/views/particlesim.scala.html
+                  HASH: 6a465ea77b07d63fa5896e0a104907324f01acdd
+                  MATRIX: 879->137|1027->192|1054->194|1115->247|1154->249|1182->251|1297->420|1327->423|1403->469|1433->568|1461->569|1502->583|1523->595|1582->633
+                  LINES: 24->5|29->6|30->7|30->7|30->7|31->8|33->13|34->14|36->16|38->18|39->19|39->19|39->19|39->19
                   -- GENERATED --
               */
           

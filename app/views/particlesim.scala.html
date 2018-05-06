@@ -6,7 +6,7 @@
 
 @main("Multiplayer Particle Simulation", assetsFinder) {
 	<div id="particle-menu"></div>
-	<canvas id="particle-canvas" class="fullscreen">
+	<canvas id="particle-canvas" width="600" height="600">
 	@*
 	 * This canvas is used to draw each client's particles to
 	 * the window
@@ -15,5 +15,5 @@
 	<div id="particle-members"></div>
 }
 
-<script src="@assetsFinder.path("javascripts/websocket.js")" type="text/javascript"></script>
-<script src="@assetsFinder.path("javascripts/particlesim.js")" type="text/javascript"></script>
+@*<script src="@assetsFinder.path("javascripts/websocket.js")" type="text/javascript"></script>*@
+<script src="@assetsFinder.path("javascripts/particlesystem.js")" type="text/javascript"></script>

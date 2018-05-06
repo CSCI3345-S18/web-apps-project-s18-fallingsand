@@ -28,4 +28,8 @@ class PSController @Inject() (cc:ControllerComponents) (implicit assetsFinder: A
     }
   }
   
+  def test = Action { implicit request =>
+    Ok(views.html.particlesim("bypassing login for testing"))
+  }
+  
 }

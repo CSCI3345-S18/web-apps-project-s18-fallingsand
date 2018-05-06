@@ -5,6 +5,18 @@ let width = 600;
 let height = 600;
 var paused = false; // for debugging; not a game feature
 
+const socket = new WebSocket('ws://'+window.location.hostname+':'+window.location.port+'/socket');
+
+socket.addEventListener('open', function (event) {
+	console.log("socket opened")
+});
+
+socket.addEventListener('message', function (event) {
+	var msg = JSON.parse(event.data);
+	console.log(msg)
+	addParticle(msg.x, msg.y);
+});
+
 context.beginPath();
 context.moveTo(0,0);
 context.lineTo(width,0);
@@ -36,7 +48,8 @@ setInterval(timeStep, 1000/timeStepsPerSecond);
 
 canvas.addEventListener('mousedown', function(evt) {
   var mousePos = getMousePos(evt);
-  addParticle(mousePos.x, mousePos.y);
+  //addParticle(mousePos.x, mousePos.y);
+  makeMessage(mousePos.x, mousePos.y, "sand");
   //console.log("drawing particle");
   mouseDown = true;
 }, false);
@@ -59,7 +72,8 @@ canvas.addEventListener('mousemove', function(evt) {
     var mousePos = getMousePos(evt);
     //console.log("drawing particle");
     //console.log("x = "+mousePos.x+ " y = " +mousePos.y);
-    addParticle(mousePos.x, mousePos.y);
+    makeMessage(mousePos.x, mousePos.y, "sand");
+    //addParticle(mousePos.x, mousePos.y);
   }
 }, false);
 
@@ -143,4 +157,15 @@ function addParticle(x, y) {
 
 function pause() {
   paused = !paused;
+}
+
+function makeMessage(inX, inY, material) {
+	var particleObj = {
+			x: inX,
+			y: inY,
+			mat: material
+	};
+	var particleJSON = JSON.stringify(particleObj);
+	socket.send(particleJSON);
+	console.log("JSON to be sent: " +particleJSON);
 }
