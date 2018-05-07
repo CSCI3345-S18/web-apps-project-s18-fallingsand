@@ -4,7 +4,7 @@
 		module="webappsprojectsp2018$sources_javadoc"
 		revision="1.0-SNAPSHOT"
 		status="integration"
-		publication="20180426094647"
+		publication="20180506160532"
 	/>
 	<configurations>
 		<conf name="compile" visibility="public" description=""/>

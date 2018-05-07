@@ -45,3 +45,7 @@ run
 compile
 eclipse
 exit
+compile
+eclipse
+dist
+exit

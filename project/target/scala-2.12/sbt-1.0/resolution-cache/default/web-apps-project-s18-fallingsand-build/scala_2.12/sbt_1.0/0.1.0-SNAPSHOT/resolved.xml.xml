@@ -4,7 +4,7 @@
 		module="web-apps-project-s18-fallingsand-build"
 		revision="0.1.0-SNAPSHOT"
 		status="integration"
-		publication="20180422194655"
+		publication="20180506160509"
 		e:sbtVersion="1.0" e:scalaVersion="2.12"
 	>
 		<description>
