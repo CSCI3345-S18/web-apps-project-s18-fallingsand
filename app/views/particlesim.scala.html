@@ -5,6 +5,7 @@
 @(message: String)(implicit assetsFinder: AssetsFinder)
 
 @main("Multiplayer Particle Simulation", assetsFinder) {
+	<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/particles.css")">
 	<div id="particle-menu"></div>
 	<canvas id="particle-canvas" width="600" height="600">
 	@*
@@ -13,6 +14,14 @@
 	 *@
 	 </canvas>
 	<div id="particle-members"></div>
+	<br>
+			<button id = "sandButton">Sand</button>
+			<button id = "waterButton">Water</button>
+			<button id = "stoneButton">Stone</button>
+			<button id = "metalButton">Metal</button>
+			<button id = "acidButton">Acid</button>
+			<br> <br>
+			<button id = "eraseButton">Erase</button>
 }
 
 @*<script src="@assetsFinder.path("javascripts/websocket.js")" type="text/javascript"></script>*@
