@@ -10,6 +10,8 @@ import play.api.mvc.WebSocket.MessageFlowTransformer
 import akka.actor._
 import actors.WSActor
 import actors.WSManager
+import actors.WSChatActor
+import actors.WSChatManager
 
 /**
  * "WSController" = "Web Socket Controller"
@@ -17,11 +19,11 @@ import actors.WSManager
  */
 @Singleton
 class WSController @Inject() (cc:ControllerComponents) (implicit system: ActorSystem, mat: Materializer, assetsFinder: AssetsFinder) extends AbstractController(cc) {
-  val wsManager = system.actorOf(WSManager.props)
+  val wsManager = system.actorOf(WSChatManager.props)
   
-  def socket = WebSocket.accept[JsValue, JsValue] { request =>
+  def socket = WebSocket.accept[String,String] { request =>
     ActorFlow.actorRef { out =>
-      WSActor.props(out, wsManager)
+      WSChatActor.props(out, wsManager)
     }
   }
   
