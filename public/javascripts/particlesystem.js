@@ -6,7 +6,7 @@ let context = canvas.getContext("2d");
 let width = canvas.offsetWidth;
 let height = canvas.offsetHeight;
 var paused = false; // for debugging; not a game feature
-
+var justOpened = false;
 var timerID = 0;
 function keepAlive(webSocket) {
 	var timeout = 20000;
@@ -20,23 +20,46 @@ function keepAlive(webSocket) {
 const socket = new WebSocket('ws://'+window.location.hostname+':'+window.location.port+'/socket');
 
 socket.addEventListener('open', function (event) {
-	
 	keepAlive(socket);
-	makeMessage(700,0,"erase");
+  justOpened = true;
+	sendOpened();
 });
+
+
 
 socket.addEventListener('message', function (event) {
 	var msg = JSON.parse(event.data);
-	if (msg.x > 600) {
-		console.log("socket opened");
+  if(msg.type === 'opened'){
+    pauseCanvas();
+  }
+  if(msg.type === 'particle'){
+    var tempMat = currentMaterial;
+    currentMaterial = msg.mat;
+    dropParticles(msg.x, msg.y);
+    currentMaterial = tempMat;
 	}
-	var tempMat = currentMaterial;
-	currentMaterial = msg.mat;
-	dropParticles(msg.x, msg.y);
-	currentMaterial = tempMat;
+  else if (msg.type === 'image'){
+    pause();
+    if(justOpened){
+        console.log("GET PARTICLES");
+        justOpened = false;
+        var image = new Image();
+        image.src = msg.data;
+        convertCanvasURLtoMaterial(image);
+    }
+  }
+  if(msg.type === 'load'){
+    if(paused){
+      pause();
+    }
+  }
+
+
+   
+  
 });
 
-let particleWidth = 2;
+let particleWidth = 1;
 var particles = []; // 2D array storing particle location and type
 
 for(var x=0; x<width/particleWidth; x++) {
@@ -98,6 +121,7 @@ canvas.addEventListener('mousemove', function(evt) {
 
 function makeMessage(inX, inY, material) {
 	var particleObj = {
+      type: 'particle',
 			x: inX,
 			y: inY,
 			mat: material
@@ -106,6 +130,36 @@ function makeMessage(inX, inY, material) {
 	socket.send(particleJSON);
 	//console.log("JSON to be sent: " +particleJSON);
 }
+
+
+function makePicture(imgURL) {
+  var messageObj = {
+      type: 'image',
+      data: imgURL
+  };
+  var messageJSON = JSON.stringify(messageObj);
+  socket.send(messageJSON);
+  //console.log("JSON to be sent: " +messageJSON);
+}
+
+function sendOpened() {
+  var messageObj = {
+      type: 'opened'
+  };
+  var messageJSON = JSON.stringify(messageObj);
+  socket.send(messageJSON);
+  //console.log("JSON to be sent: " +messageJSON);
+}
+
+function sendLoad() {
+  var messageObj = {
+      type: 'load'
+  };
+  var messageJSON = JSON.stringify(messageObj);
+  socket.send(messageJSON);
+  //console.log("JSON to be sent: " +messageJSON);
+}
+
 
 function timeStep() {
   if(!paused) {
@@ -317,6 +371,99 @@ function color(material) {
   else if(material=="erase")
     return "white";
 }
+
+
+
+function convertCanvasURLtoMaterial(img){
+  
+  img.onload = function(){
+    //context.fillRect(0,0,width,height);
+    context.drawImage(img,0,0);
+    //context.fillRect(0,0,width,height);
+    imgData = context.getImageData(0, 0, width, height); 
+
+    console.log(imgData);
+
+    apix = imgData.data;
+    npix = apix.length;
+    //console.log(npix);
+
+   for(var y = 0; y < height; y++){
+      for(var x = 0; x < width; x++){
+            var i = (y * 4) * width + x * 4;
+              r=(apix[i]);
+              r = (r).toString(16);
+              g=apix[i+1];
+              g = (g).toString(16)
+              b=apix[i+2];
+              b = (b).toString(16);
+              a=apix[i+3];
+
+
+              var s = r+""+g+""+b;
+              s = s.toUpperCase();
+
+              var tempMat = "empty"
+              switch(s){
+                case "D2B48C":
+                  //console.log("sand");
+                  tempMat = "sand"
+                break;
+                case "808080":
+                  //console.log("FOUND stone");
+                  //console.log(_row);
+                  //console.log(_col);
+                  tempMat = "stone"
+                break;
+                case "0080":
+                  tempMat = "water"
+                break;
+                case "C0C0C0":
+                  tempMat = "metal"
+                break;
+                case "9ACD32":
+                  tempMat = "acid"
+                break;
+                case "FF4500":
+                  tempMat = "lava"
+                break;
+                default:
+                  tempMat = "empty"
+                break;
+              }
+              //"sand" == #D2B48C"
+              //"stone" == "#808080"
+              // "water" == "#000080"
+              // "metal" == "C0C0C0"
+              // "acid" == "9ACD32"
+              // "lava" == "FF4500"
+                //console.log(_col);
+
+                particles[x][y] = tempMat;
+              }
+            }
+
+  } 
+  sendLoad();
+}
+
+function pauseCanvas(){
+    pause();
+
+    //context.resetTransform();
+    var image = new Image();
+    image.src = canvas.toDataURL();
+    //clear();
+    console.log(image.src);
+    makePicture(image.src);
+    //convertCanvasURLtoMaterial(image);
+    
+    //drawParticles();
+    //pause();
+}
+
+
+
 
 //button event listeners
 document.getElementById('sandButton').onclick = function(){
