@@ -1,6 +1,6 @@
 // @GENERATOR:play-routes-compiler
 // @SOURCE:C:/Users/kayla/Documents/web-apps-project-s18-fallingsand/conf/routes
-// @DATE:Sun Apr 15 18:54:38 CDT 2018
+// @DATE:Mon May 07 08:01:10 CDT 2018
 
 package router
 
@@ -19,7 +19,7 @@ class Routes(
   WSController_3: controllers.WSController,
   // @LINE:7
   LoginController_2: controllers.LoginController,
-  // @LINE:13
+  // @LINE:14
   Assets_1: controllers.Assets,
   val prefix: String
 ) extends GeneratedRouter {
@@ -32,7 +32,7 @@ class Routes(
     WSController_3: controllers.WSController,
     // @LINE:7
     LoginController_2: controllers.LoginController,
-    // @LINE:13
+    // @LINE:14
     Assets_1: controllers.Assets
   ) = this(errorHandler, PSController_0, WSController_3, LoginController_2, Assets_1, "/")
 
@@ -52,6 +52,7 @@ class Routes(
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """login""", """controllers.LoginController.login"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """register""", """controllers.LoginController.register"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """logout""", """controllers.LoginController.logout"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """test""", """controllers.PSController.test"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """assets/""" + "$" + """file<.+>""", """controllers.Assets.versioned(file:String)"""),
     Nil
   ).foldLeft(List.empty[(String,String,String)]) { (s,e) => e.asInstanceOf[Any] match {
@@ -168,11 +169,29 @@ class Routes(
     )
   )
 
-  // @LINE:13
-  private[this] lazy val controllers_Assets_versioned6_route = Route("GET",
+  // @LINE:11
+  private[this] lazy val controllers_PSController_test6_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("test")))
+  )
+  private[this] lazy val controllers_PSController_test6_invoker = createInvoker(
+    PSController_0.test,
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.PSController",
+      "test",
+      Nil,
+      "GET",
+      this.prefix + """test""",
+      """""",
+      Seq()
+    )
+  )
+
+  // @LINE:14
+  private[this] lazy val controllers_Assets_versioned7_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("assets/"), DynamicPart("file", """.+""",false)))
   )
-  private[this] lazy val controllers_Assets_versioned6_invoker = createInvoker(
+  private[this] lazy val controllers_Assets_versioned7_invoker = createInvoker(
     Assets_1.versioned(fakeValue[String]),
     play.api.routing.HandlerDef(this.getClass.getClassLoader,
       "router",
@@ -225,10 +244,16 @@ class Routes(
         controllers_LoginController_logout5_invoker.call(LoginController_2.logout)
       }
   
-    // @LINE:13
-    case controllers_Assets_versioned6_route(params@_) =>
+    // @LINE:11
+    case controllers_PSController_test6_route(params@_) =>
+      call { 
+        controllers_PSController_test6_invoker.call(PSController_0.test)
+      }
+  
+    // @LINE:14
+    case controllers_Assets_versioned7_route(params@_) =>
       call(params.fromPath[String]("file", None)) { (file) =>
-        controllers_Assets_versioned6_invoker.call(Assets_1.versioned(file))
+        controllers_Assets_versioned7_invoker.call(Assets_1.versioned(file))
       }
   }
 }

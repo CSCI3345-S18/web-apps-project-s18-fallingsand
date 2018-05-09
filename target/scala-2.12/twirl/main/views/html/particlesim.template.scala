@@ -29,16 +29,24 @@ object particlesim extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.ap
 Seq[Any](format.raw/*5.56*/("""
 
 """),_display_(/*7.2*/main("Multiplayer Particle Simulation", assetsFinder)/*7.55*/ {_display_(Seq[Any](format.raw/*7.57*/("""
-	"""),format.raw/*8.2*/("""<div id="particle-menu"></div>
-	<canvas id="particle-canvas" class="fullscreen">
-	"""),format.raw/*13.5*/("""
-	 """),format.raw/*14.3*/("""</canvas>
+	"""),format.raw/*8.2*/("""<link rel="stylesheet" media="screen" href=""""),_display_(/*8.47*/routes/*8.53*/.Assets.versioned("stylesheets/particles.css")),format.raw/*8.99*/("""">
+	<div id="particle-menu"></div>
+	<canvas id="particle-canvas" width="600" height="600">
+	"""),format.raw/*14.5*/("""
+	 """),format.raw/*15.3*/("""</canvas>
 	<div id="particle-members"></div>
-""")))}),format.raw/*16.2*/("""
+	<br>
+			<button id = "sandButton">Sand</button>
+			<button id = "waterButton">Water</button>
+			<button id = "stoneButton">Stone</button>
+			<button id = "metalButton">Metal</button>
+			<button id = "acidButton">Acid</button>
+			<br> <br>
+			<button id = "eraseButton">Erase</button>
+""")))}),format.raw/*25.2*/("""
 
-"""),format.raw/*18.1*/("""<script src=""""),_display_(/*18.15*/assetsFinder/*18.27*/.path("javascripts/websocket.js")),format.raw/*18.60*/("""" type="text/javascript"></script>
-<script src=""""),_display_(/*19.15*/assetsFinder/*19.27*/.path("javascripts/particlesim.js")),format.raw/*19.62*/("""" type="text/javascript"></script>
-"""))
+"""),format.raw/*27.98*/("""
+"""),format.raw/*28.1*/("""<script src=""""),_display_(/*28.15*/assetsFinder/*28.27*/.path("javascripts/particlesystem.js")),format.raw/*28.65*/("""" type="text/javascript"></script>"""))
       }
     }
   }
@@ -54,11 +62,11 @@ Seq[Any](format.raw/*5.56*/("""
 
               /*
                   -- GENERATED --
-                  DATE: Sun Apr 15 08:36:36 CDT 2018
+                  DATE: Mon May 07 08:01:10 CDT 2018
                   SOURCE: C:/Users/kayla/Documents/web-apps-project-s18-fallingsand/app/views/particlesim.scala.html
-                  HASH: 672c0e0d65a2401072e4668311076919ee55e1a7
-                  MATRIX: 882->141|1031->195|1061->200|1122->253|1161->255|1190->258|1301->426|1332->430|1410->478|1441->482|1482->496|1503->508|1557->541|1634->591|1655->603|1711->638
-                  LINES: 24->5|29->5|31->7|31->7|31->7|32->8|34->13|35->14|37->16|39->18|39->18|39->18|39->18|40->19|40->19|40->19
+                  HASH: 7ea088fb30e133fbd1cb084f5b65cb7ddcb59497
+                  MATRIX: 882->141|1031->195|1061->200|1122->253|1161->255|1190->258|1261->303|1275->309|1341->355|1463->534|1494->538|1865->879|1897->980|1926->982|1967->996|1988->1008|2047->1046
+                  LINES: 24->5|29->5|31->7|31->7|31->7|32->8|32->8|32->8|32->8|35->14|36->15|46->25|48->27|49->28|49->28|49->28|49->28
                   -- GENERATED --
               */
           

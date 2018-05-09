@@ -1,6 +1,6 @@
 // @GENERATOR:play-routes-compiler
 // @SOURCE:C:/Users/kayla/Documents/web-apps-project-s18-fallingsand/conf/routes
-// @DATE:Sun Apr 15 18:54:38 CDT 2018
+// @DATE:Mon May 07 08:01:10 CDT 2018
 
 import play.api.routing.JavaScriptReverseRoute
 
@@ -24,6 +24,16 @@ package controllers.javascript {
       """
         function() {
           return _wA({method:"GET", url:"""" + _prefix + """"})
+        }
+      """
+    )
+  
+    // @LINE:11
+    def test: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.PSController.test",
+      """
+        function() {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "test"})
         }
       """
     )
@@ -100,7 +110,7 @@ package controllers.javascript {
   
   }
 
-  // @LINE:13
+  // @LINE:14
   class ReverseAssets(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -108,7 +118,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:13
+    // @LINE:14
     def versioned: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.Assets.versioned",
       """
